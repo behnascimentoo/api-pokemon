@@ -16,8 +16,13 @@ public class PokemonService {
     public void addPokemon( Pokemon pokemon){
         pokemon = pokemonRepository.save(pokemon);
     }
-
     public List<Pokemon> getAll() {
         return pokemonRepository.findAll();
+    }
+
+    public void deletePokemon(Long id){
+        pokemonRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Pokemom não encontrado")) ;
+        pokemonRepository.deleteById(id);
     }
 }

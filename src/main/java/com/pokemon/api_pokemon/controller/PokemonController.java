@@ -26,4 +26,10 @@ public class PokemonController {
         pokemonService.addPokemon(pokemon);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> removePokemon (@PathVariable Long id){
+        pokemonService.deletePokemon(id);
+        return ResponseEntity.noContent().build();
+    }
 }
