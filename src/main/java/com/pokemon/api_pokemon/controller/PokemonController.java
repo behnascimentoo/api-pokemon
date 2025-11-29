@@ -1,8 +1,9 @@
 package com.pokemon.api_pokemon.controller;
 
+import com.pokemon.api_pokemon.dtos.CreatePokemonDto;
 import com.pokemon.api_pokemon.dtos.PokemonResponseDto;
-import com.pokemon.api_pokemon.entities.Pokemon;
-import com.pokemon.api_pokemon.repositories.PokemonRepository;
+import com.pokemon.api_pokemon.dtos.UpdatePokemonDto;
+import com.pokemon.api_pokemon.repositories.TypePokemonRepository;
 import com.pokemon.api_pokemon.services.PokemonServiceImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,30 +17,38 @@ import java.util.List;
 public class PokemonController {
 
     private final PokemonServiceImp pokemonService;
-    private final PokemonRepository pokemonRepository;
+    private final TypePokemonRepository typePokemonRepository;
 
-    //Listar Pokémon
     @GetMapping
-    public ResponseEntity<List<Pokemon>> getAll() {
-        List<Pokemon> pokemons = pokemonService.getAll();
-        return ResponseEntity.ok(pokemons);
+    public ResponseEntity<List<PokemonResponseDto>> getAll() {
+        return ResponseEntity.ok(pokemonService.getAll());
     }
 
-    //Buscar Pokémon por ID
     @GetMapping("/id/{id}")
-    public ResponseEntity<PokemonResponseDto>
+    public ResponseEntity<PokemonResponseDto> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(pokemonService.getPokemonByID(id));
+    }
 
-    //Cadastrar Pokémon
     @PostMapping
-    public ResponseEntity<Void> addPokemon (@RequestBody Pokemon pokemon){
-        pokemonService.addPokemon(pokemon);
+    public ResponseEntity<Void> addPokemon(@RequestBody CreatePokemonDto dto) {
+        pokemonService.addPokemon(dto);
         return ResponseEntity.noContent().build();
     }
 
-    //Atualizar Pokémon
-    //Filtrar Pokémon por Tipo
+    @PutMapping("/{id}")
+    public ResponseEntity<PokemonResponseDto> updatePokemon(
+            @PathVariable Long id,
+            @RequestBody UpdatePokemonDto dto) {
 
-    //Deletar Pokémon
+        return ResponseEntity.ok(pokemonService.updatePokemon(id, dto));
+    }
+
+    @GetMapping("/type/{type}")
+    public ResponseEntity<List<PokemonResponseDto>> getByType(@PathVariable String type) {
+        List<PokemonResponseDto> pokemons = pokemonService.getPokemonByTypeName(type);
+        return ResponseEntity.ok(pokemons);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removePokemon (@PathVariable Long id){
         pokemonService.deletePokemon(id);

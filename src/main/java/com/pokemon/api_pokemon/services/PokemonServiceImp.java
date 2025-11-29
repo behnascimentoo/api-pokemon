@@ -4,6 +4,7 @@ import com.pokemon.api_pokemon.dtos.CreatePokemonDto;
 import com.pokemon.api_pokemon.dtos.PokemonResponseDto;
 import com.pokemon.api_pokemon.dtos.UpdatePokemonDto;
 import com.pokemon.api_pokemon.entities.Pokemon;
+import com.pokemon.api_pokemon.entities.TypeName;
 import com.pokemon.api_pokemon.entities.TypePokemon;
 import com.pokemon.api_pokemon.exceptions.PokemonNotFoundException;
 import com.pokemon.api_pokemon.exceptions.TypePokemonNotFoundException;
@@ -40,6 +41,9 @@ public class PokemonServiceImp implements PokemonService{
                 .orElseThrow(() -> new RuntimeException("Pokemon não encontrado"));
         Set<TypePokemon> typeEntities =
                 typePokemonRepository.findByNameIn(dto.typePokemon());
+        if (typeEntities.isEmpty()) {
+            throw TypePokemonNotFoundException.byType(dto.typePokemon());
+        }
         pokemonMapper.updateEntity(pokemon, dto, typeEntities);
         Pokemon updated = pokemonRepository.save(pokemon);
         return pokemonMapper.toDto(updated);
@@ -61,13 +65,20 @@ public class PokemonServiceImp implements PokemonService{
     }
 
     @Override
-    public List<PokemonResponseDto> getPokemonByType(TypePokemon typePokemon) {
-        List<Pokemon> pokemonsByType = pokemonRepository
-                .findByTypePokemon(typePokemon)
-                .orElseThrow(() -> TypePokemonNotFoundException.byType(typePokemon));
-        return pokemonsByType.stream()
+    public List<PokemonResponseDto> getPokemonByTypeName(String type) {
+        TypeName typeName;
+        try {
+            typeName = TypeName.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new TypePokemonNotFoundException("Tipo inválido: " + type);
+        }
+        List<Pokemon> pokemons = pokemonRepository.findByTypePokemon_Name(typeName);
+        if (pokemons.isEmpty()) {
+            throw new TypePokemonNotFoundException("Nenhum Pokémon encontrado para o tipo: " + type);
+        }
+        return pokemons.stream()
                 .map(pokemonMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

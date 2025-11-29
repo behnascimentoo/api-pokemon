@@ -21,7 +21,7 @@ public class TypePokemon {
     @Column(nullable = false, unique = true)
     private TypeName name;
 
-    @ManyToMany(mappedBy = "type")
+    @ManyToMany(mappedBy = "typePokemon")
     private Set<Pokemon> pokemons = new HashSet<>();
 
 }
