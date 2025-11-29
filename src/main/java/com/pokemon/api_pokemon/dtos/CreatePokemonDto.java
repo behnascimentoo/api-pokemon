@@ -21,4 +21,6 @@ public record CreatePokemonDto(
         @NotNull(message = "Peso não pode estar vazio")
         @Size(min = 2, max = 5)
         Float wight
+
+
 ) {}

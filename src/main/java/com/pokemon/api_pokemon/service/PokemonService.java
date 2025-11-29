@@ -1,4 +1,4 @@
-package com.pokemon.api_pokemon.services;
+package com.pokemon.api_pokemon.service;
 
 import com.pokemon.api_pokemon.dtos.CreatePokemonDto;
 import com.pokemon.api_pokemon.dtos.PokemonResponseDto;

@@ -1,8 +1,8 @@
 package com.pokemon.api_pokemon.entities;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_pokemon")
+@Schema(description = "Represents a Pokémon entity")
 public class Pokemon {
 
     @Id
@@ -31,5 +32,13 @@ public class Pokemon {
 
     private Float hightPokemon;
     private Float wightPokemon;
+
+    public Pokemon(Long id, String name, TypePokemon type) {
+        this.id = id;
+        this.name = name;
+        if (type != null) {
+            this.typePokemon.add(type);
+        }
+    }
 
 }
