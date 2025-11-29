@@ -1,0 +1,10 @@
+✅ Cadastrar Pokémon
+✅ Listar Pokémon
+Buscar Pokémon por ID
+Atualizar Pokémon
+✅ Deletar Pokémon
+Filtrar Pokémon por Tipo
+Documentar Endpoints (usando Swagger ou SpringDoc OpenAPI)
+Testabilidade (A aplicação deve permitir a criação de testes unitários e de
+               integração, principalmente para as camadas de serviço e
+               repositório.)

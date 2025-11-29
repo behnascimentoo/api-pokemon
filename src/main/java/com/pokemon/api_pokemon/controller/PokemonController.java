@@ -10,23 +10,30 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/pokemons")
+@RequestMapping("/pokemons")
 public class PokemonController {
 
     private final PokemonService pokemonService;
 
+    //Listar Pokémon
     @GetMapping
     public ResponseEntity<List<Pokemon>> getAll() {
         List<Pokemon> pokemons = pokemonService.getAll();
         return ResponseEntity.ok(pokemons);
     }
+    //Buscar Pokémon por ID
 
+    //Cadastrar Pokémon
     @PostMapping
     public ResponseEntity<Void> addPokemon (@RequestBody Pokemon pokemon){
         pokemonService.addPokemon(pokemon);
         return ResponseEntity.noContent().build();
     }
 
+    //Atualizar Pokémon
+    //Filtrar Pokémon por Tipo
+
+    //Deletar Pokémon
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removePokemon (@PathVariable Long id){
         pokemonService.deletePokemon(id);
