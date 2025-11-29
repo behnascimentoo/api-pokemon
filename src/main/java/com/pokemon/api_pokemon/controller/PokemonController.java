@@ -1,7 +1,9 @@
 package com.pokemon.api_pokemon.controller;
 
+import com.pokemon.api_pokemon.dtos.PokemonResponseDto;
 import com.pokemon.api_pokemon.entities.Pokemon;
-import com.pokemon.api_pokemon.services.PokemonService;
+import com.pokemon.api_pokemon.repositories.PokemonRepository;
+import com.pokemon.api_pokemon.services.PokemonServiceImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +15,8 @@ import java.util.List;
 @RequestMapping("/pokemons")
 public class PokemonController {
 
-    private final PokemonService pokemonService;
+    private final PokemonServiceImp pokemonService;
+    private final PokemonRepository pokemonRepository;
 
     //Listar Pokémon
     @GetMapping
@@ -21,7 +24,10 @@ public class PokemonController {
         List<Pokemon> pokemons = pokemonService.getAll();
         return ResponseEntity.ok(pokemons);
     }
+
     //Buscar Pokémon por ID
+    @GetMapping("/id/{id}")
+    public ResponseEntity<PokemonResponseDto>
 
     //Cadastrar Pokémon
     @PostMapping

@@ -19,7 +19,7 @@ public class Pokemon {
     private Long id;
 
     @Column(nullable = false, name = "pokemon")
-    private String nome;
+    private String name;
 
     @ManyToMany
     @JoinTable (
@@ -27,9 +27,9 @@ public class Pokemon {
             joinColumns = @JoinColumn(name = "pokemon_id"),
             inverseJoinColumns = @JoinColumn(name = "tipo_id")
     )
-    private Set<Tipo> tipo = new HashSet<>();
+    private Set<TypePokemon> typePokemon = new HashSet<>();
 
-    private Float altura;
-    private Float peso;
+    private Float hightPokemon;
+    private Float wightPokemon;
 
 }

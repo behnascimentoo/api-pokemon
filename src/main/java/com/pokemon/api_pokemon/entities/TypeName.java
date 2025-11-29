@@ -1,6 +1,6 @@
 package com.pokemon.api_pokemon.entities;
 
-public enum NomeTipo {
+public enum TypeName {
     AGUA,
     VENENOSO,
     FOGO,
